@@ -8,7 +8,7 @@ Simple wrapper for the HTML input tag and HTML5 FileReader API
 
 react-simple-file-input expects a readAs option to indicate how the file should be read. Valid options are:
 
-- 'text' [default] (Text)
+- 'text' (Text) (Default)
 - 'buffer' (Array Buffer)
 - 'binary' (Binary String)
 - 'dataUrl' (Data URL)
