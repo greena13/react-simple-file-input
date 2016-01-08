@@ -1,6 +1,6 @@
 {
   "name": "react-simple-file-input",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple wrapper for the HTML input tag and HTML5 FileReader API",
   "main": "lib/index.js",
   "scripts": {
@@ -20,9 +20,12 @@
     "react"
   ],
 
-  "devDependencies": {
-    "babel": "^5.0.0",
+  "dependencies": {
     "object-keys": "^1.0.9"
+  },
+
+  "devDependencies": {
+    "babel": "^5.0.0"
   },
 
   "author": "Aleck Greenham",
