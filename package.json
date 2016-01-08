@@ -1,0 +1,34 @@
+{
+  "name": "react-simple-file-input",
+  "version": "0.0.1",
+  "description": "Simple wrapper for the HTML input tag and HTML5 FileReader API",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "npm run prepublish && jasmine",
+    "compile": "babel --presets es2015 src/ --out-dir lib/",
+    "prepublish": "npm run compile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greena13/react-simple-file-input.git"
+  },
+
+  "keywords": [
+    "file",
+    "upload",
+    "FileReader",
+    "react"
+  ],
+
+  "devDependencies": {
+    "babel": "^5.0.0",
+    "object-keys": "^1.0.9"
+  },
+
+  "author": "Aleck Greenham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/greena13/react-simple-file-input/issues"
+  },
+  "homepage": "https://github.com/greena13/react-simple-file-input#readme"
+}
