@@ -21,7 +21,6 @@ const READ_METHOD_ALIASES = {
 
 const SUPPORTED_EVENTS = [
   'onLoadStart',
-  'onProgress',
   'onLoadEnd',
   'onLoad',
   'onAbort',
@@ -36,8 +35,11 @@ const FileInput = React.createClass({
     onLoadEnd: React.PropTypes.func,
     onLoad: React.PropTypes.func,
     onAbort: React.PropTypes.func,
+    onCancel: React.PropTypes.func,
     onError: React.PropTypes.func,
-    onProgress: React.PropTypes.func
+    onProgress: React.PropTypes.func,
+    cancelIf: React.PropTypes.func,
+    abortIf: React.PropTypes.oneOf(React.PropTypes.func, React.PropTypes.boolean)
   },
 
   getDefaultProps: function () {
@@ -55,9 +57,18 @@ const FileInput = React.createClass({
   },
 
   handleChange: function(event){
+    const {readAs, cancelIf, onCancel, onProgress, abortIf} = this.props;
     const fileReader = new window.FileReader();
 
     const file = event.target.files[0];
+
+    if(cancelIf && cancelIf(file)){
+      if(onCancel){
+        onCancel(file);
+      }
+
+      return;
+    }
 
     for(let i = 0; i < SUPPORTED_EVENTS.length; i++){
       const handlerName = SUPPORTED_EVENTS[i];
@@ -69,7 +80,20 @@ const FileInput = React.createClass({
       }
     }
 
-    const {readAs} = this.props;
+    if(typeof abortIf !== 'undefined'){
+      fileReader.onprogress = (event)=>{
+
+        if((typeof(abortIf) === 'function' && abortIf(event)) || abortIf){
+          fileReader.abort();
+        }
+
+        if(onProgress){
+          onProgress(event);
+        }
+      }
+    } else if(onProgress) {
+      fileReader.onprogress = onProgress;
+    }
 
     fileReader[READ_METHOD_ALIASES[readAs]](file);
   },
