@@ -39,7 +39,7 @@ const FileInput = React.createClass({
     onError: React.PropTypes.func,
     onProgress: React.PropTypes.func,
     cancelIf: React.PropTypes.func,
-    abortIf: React.PropTypes.oneOf(React.PropTypes.func, React.PropTypes.boolean)
+    abortIf: React.PropTypes.func
   },
 
   getDefaultProps: function () {
@@ -82,13 +82,10 @@ const FileInput = React.createClass({
 
     if(typeof abortIf !== 'undefined'){
       fileReader.onprogress = (event)=>{
-
-        if((typeof(abortIf) === 'function' && abortIf(event)) || abortIf){
+        if(abortIf(event, file)){
           fileReader.abort();
-        }
-
-        if(onProgress){
-          onProgress(event);
+        } else if(onProgress){
+          onProgress(event, file);
         }
       }
     } else if(onProgress) {
