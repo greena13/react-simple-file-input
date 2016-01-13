@@ -6,12 +6,14 @@ Simple wrapper for the HTML input tag and HTML5 FileReader API
 
 ### readAs
 
-react-simple-file-input expects a readAs option to indicate how the file should be read. Valid options are:
+react-simple-file-input expects a `readAs` option to indicate how the file should be read. Valid options are:
 
-- 'text' (Text) (Default)
+- 'text' (Text)
 - 'buffer' (Array Buffer)
 - 'binary' (Binary String)
 - 'dataUrl' (Data URL)
+
+By default the `readAs` option is `undefined`. If left undefined, the file will not be read from disk and only the `onChange` event will be triggered. 
 
 ### Events
 
@@ -30,9 +32,16 @@ Each receives the native event as the first argument, and the selected file obje
 
 #### Custom events
 
+- onChange
 - onCancel
 
+The `onChange` handler is called whenever the file is changed and occurs before the file is read from disk. It receives a `File` object as its only argument.
+
 The `onCancel` handler receives the `File` object corresponding to the file the user attempted to read from the file system.
+
+### Skipping file reads
+
+If the `readAs` option is not specified, the file will not be read from disk and only `onChange` will be triggered. All other events as skipped.
 
 ### Aborting \& cancelling file reads
 

@@ -36,16 +36,11 @@ const FileInput = React.createClass({
     onLoad: React.PropTypes.func,
     onAbort: React.PropTypes.func,
     onCancel: React.PropTypes.func,
+    onChange: React.PropTypes.func,
     onError: React.PropTypes.func,
     onProgress: React.PropTypes.func,
     cancelIf: React.PropTypes.func,
     abortIf: React.PropTypes.func
-  },
-
-  getDefaultProps: function () {
-    return ({
-      readAs: 'text'
-    });
   },
 
   componentWillMount: function(){
@@ -57,42 +52,49 @@ const FileInput = React.createClass({
   },
 
   handleChange: function(event){
-    const {readAs, cancelIf, onCancel, onProgress, abortIf} = this.props;
-    const fileReader = new window.FileReader();
-
+    const {readAs, cancelIf, onCancel, onProgress, abortIf, onChange} = this.props;
     const file = event.target.files[0];
 
-    if(cancelIf && cancelIf(file)){
-      if(onCancel){
-        onCancel(file);
-      }
-
-      return;
+    if(onChange){
+      onChange(file);
     }
 
-    for(let i = 0; i < SUPPORTED_EVENTS.length; i++){
-      const handlerName = SUPPORTED_EVENTS[i];
+    if(readAs){
+      const fileReader = new window.FileReader();
 
-      if(this.props[handlerName]){
-        fileReader[handlerName.toLowerCase()] = (fileReadEvent)=>{
-          this.props[handlerName](fileReadEvent, file);
-        };
+      if(cancelIf && cancelIf(file)){
+        if(onCancel){
+          onCancel(file);
+        }
+
+        return;
       }
-    }
 
-    if(typeof abortIf !== 'undefined'){
-      fileReader.onprogress = (event)=>{
-        if(abortIf(event, file)){
-          fileReader.abort();
-        } else if(onProgress){
-          onProgress(event, file);
+      for(let i = 0; i < SUPPORTED_EVENTS.length; i++){
+        const handlerName = SUPPORTED_EVENTS[i];
+
+        if(this.props[handlerName]){
+          fileReader[handlerName.toLowerCase()] = (fileReadEvent)=>{
+            this.props[handlerName](fileReadEvent, file);
+          };
         }
       }
-    } else if(onProgress) {
-      fileReader.onprogress = onProgress;
+
+      if(typeof abortIf !== 'undefined'){
+        fileReader.onprogress = (event)=>{
+          if(abortIf(event, file)){
+            fileReader.abort();
+          } else if(onProgress){
+            onProgress(event, file);
+          }
+        }
+      } else if(onProgress) {
+        fileReader.onprogress = onProgress;
+      }
+
+      fileReader[READ_METHOD_ALIASES[readAs]](file);
     }
 
-    fileReader[READ_METHOD_ALIASES[readAs]](file);
   },
 
   handleClick: function(){
