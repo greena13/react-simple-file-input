@@ -105,13 +105,14 @@ const FileInput = React.createClass({
     return(
         <div onClick={this.handleClick} >
 
-    <input {...this.props}
-    type='file'
-    onChange={this.handleChange} ref={INPUT_FIELD_REF}
-    style={STYLE.FIELD}
-    />
+      <input {...this.props}
+        type='file'
+        onChange={this.handleChange} ref={INPUT_FIELD_REF}
+        style={STYLE.FIELD}
+        children={null}
+      />
 
-    {this.props.children}
+      {this.props.children}
     </div>
     );
   }
