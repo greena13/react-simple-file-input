@@ -6,7 +6,7 @@ const objectKeys = Object.keys || require('object-keys');
 
 const STYLE = {
   FIELD: {
-    visibility: 'hidden'
+    display: 'none'
   }
 };
 
@@ -103,17 +103,17 @@ const FileInput = React.createClass({
 
   render: function () {
     return(
-        <div onClick={this.handleClick} >
+      <div onClick={this.handleClick} >
 
-      <input {...this.props}
-        type='file'
-        onChange={this.handleChange} ref={INPUT_FIELD_REF}
-        style={STYLE.FIELD}
-        children={null}
-      />
+        <input {...this.props}
+          type='file'
+          onChange={this.handleChange} ref={INPUT_FIELD_REF}
+          style={this.props.children ? STYLE.FIELD : {}}
+          children={null}
+        />
 
-      {this.props.children}
-    </div>
+        {this.props.children}
+      </div>
     );
   }
 });
