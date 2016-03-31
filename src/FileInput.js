@@ -1,6 +1,7 @@
 'use strict';
 
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 const objectKeys = Object.keys || require('object-keys');
 
@@ -98,7 +99,7 @@ const FileInput = React.createClass({
   },
 
   handleClick: function(){
-    React.findDOMNode(this.refs[INPUT_FIELD_REF]).click();
+    ReactDOM.findDOMNode(this.refs[INPUT_FIELD_REF]).click();
   },
 
   render: function () {
