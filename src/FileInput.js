@@ -54,46 +54,50 @@ const FileInput = React.createClass({
 
   handleChange: function(event){
     const {readAs, cancelIf, onCancel, onProgress, abortIf, onChange} = this.props;
-    const file = event.target.files[0];
+    const files = event.target.files
 
     if(onChange){
-      onChange(file);
+      onChange(files);
     }
 
     if(readAs){
-      const fileReader = new window.FileReader();
+        files.forEach(file => {
+          const fileReader = new window.FileReader();
 
-      if(cancelIf && cancelIf(file)){
-        if(onCancel){
-          onCancel(file);
-        }
+          if(cancelIf && cancelIf(file)){
+            if(onCancel){
+              onCancel(file);
+            }
 
-        return;
-      }
-
-      for(let i = 0; i < SUPPORTED_EVENTS.length; i++){
-        const handlerName = SUPPORTED_EVENTS[i];
-
-        if(this.props[handlerName]){
-          fileReader[handlerName.toLowerCase()] = (fileReadEvent)=>{
-            this.props[handlerName](fileReadEvent, file);
-          };
-        }
-      }
-
-      if(typeof abortIf !== 'undefined'){
-        fileReader.onprogress = (event)=>{
-          if(abortIf(event, file)){
-            fileReader.abort();
-          } else if(onProgress){
-            onProgress(event, file);
+            return;
           }
-        }
-      } else if(onProgress) {
-        fileReader.onprogress = onProgress;
-      }
 
-      fileReader[READ_METHOD_ALIASES[readAs]](file);
+          for(let i = 0; i < SUPPORTED_EVENTS.length; i++){
+            const handlerName = SUPPORTED_EVENTS[i];
+
+            if(this.props[handlerName]){
+              fileReader[handlerName.toLowerCase()] = (fileReadEvent)=>{
+                this.props[handlerName](fileReadEvent, file);
+              };
+            }
+          }
+
+          if(typeof abortIf !== 'undefined'){
+            fileReader.onprogress = (event)=>{
+              if(abortIf(event, file)){
+                fileReader.abort();
+              } else if(onProgress){
+                onProgress(event, file);
+              }
+            }
+          } else if(onProgress) {
+            fileReader.onprogress = onProgress;
+          }
+          if(multiple) {
+            file.forEach()
+          }
+          fileReader[READ_METHOD_ALIASES[readAs]](file);
+      })
     }
 
   },
