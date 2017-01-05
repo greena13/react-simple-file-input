@@ -1,7 +1,30 @@
 # react-simple-file-input
 
-Simple wrapper for the HTML input tag and HTML5 FileReader API
+Simple wrapper for the HTML input tag and HTML5 FileReader API that supports multiple files
 
+## Usage
+
+```javascript
+<FileInput 
+  readAs='binary'
+  multiple
+    
+  onLoadStart={this.showProgressBar}
+  onLoad={this.handleFileSelected}
+  onProgress={this.updateProgressBar}
+                
+  cancelIf={fileIsIncorrectFiletype}
+  abortIf={this.cancelButtonClicked}
+  
+  onCancel={this.showInvalidFileTypeMessage}
+  onAbort={this.resetCancelButtonClicked}
+ />
+```
+## Installation
+
+```bash
+npm install react-simple-file-input --save
+```
 ## Options
 
 ### readAs
@@ -35,10 +58,15 @@ Each receives the native event as the first argument, and the selected file obje
 - onChange
 - onCancel
 
-The `onChange` handler is called whenever the file is changed and occurs before the file is read from disk. It receives a `File` object as its only argument.
+The `onChange` handler is called whenever the file is changed and occurs before the file is read from disk. It receives a `File` object as its only argument when the `multiple` prop is false (or left undefined), otherwise it receives an array-like list of `File` objects as its only argument.
 
 The `onCancel` handler receives the `File` object corresponding to the file the user attempted to read from the file system.
 
+### Allowing multiple files to be selected
+
+By setting the `multiple` prop to a truthy value, you allow the user to select multiple files at once, using the same input by either ctrl + click or shift + clicking more than one file in file selection modal that appears.
+
+This causes the `onChange` handler to receive a list of file objects (even if it's a only one) rather a single file object. All other handlers are triggered independently, for each file the user has selected, so cancelling, aborting and monitoring the progress of reading each file may be done separately. If you wish to cancel or abort all file reads if one fails, this most be done by maintaining state externally, in your handlers. 
 ### Skipping file reads
 
 If the `readAs` option is not specified, the file will not be read from disk and only `onChange` will be triggered. All other events as skipped.
@@ -57,11 +85,17 @@ If defined the `abortIf` function is executed just before every time the `onProg
  
 ### Children
 
-All children passed to react-simple-file-input will be nested so when they are clicked the browser's file selection window opens.
+React simple file input does not support children. If you wish to use another element to set the clickable area for the user, use labels or a similar strategy (see example below).
 
+### Styling, hiding or replacing the default input field
+
+All props passed to `FileInput` are passed to the resulting `<input>` tag so it's possible to style or hide the default input field by passing `style` or `className` prop values.
+
+To replace the input field with another element, hide it and use a label as demonstrated below in the example.
 ## Examples
 
 ```javascript
+import React, { Component } from 'react';
 var FileInput = require('react-simple-file-input');
 
 var allowedFileTypes = ["image/png", "image/jpeg", "image/gif"];
@@ -74,54 +108,83 @@ function fileIsIncorrectFiletype(file){
   }
 }
 
-var Component = React.createClass({
-
-  render: function(){
+class AssetsForm extends Component {
+  constructor(props, context) {
+    super(props, context);
+    
+    this.cancelButtonClicked = this.cancelButtonClicked.bind(this);
+    this.resetCancelButtonClicked = this.resetCancelButtonClicked.bind(this);
+    this.showProgressBar = this.showProgressBar.bind(this);
+    this.updateProgressBar = this.updateProgressBar.bind(this);
+    this.handleFileSelected = this.handleFileSelected.bind(this);
+    
+    this.state = {
+      cancelButtonClicked: false  
+    };
+  }
+  
+  render(){
     return(
       <div>
         To upload a file:
         
-         <FileInput 
-            readAs='binary'
-            onLoadStart={this.showProgressBar}
-            onLoad={this.handleFileSelected}
-            onProgress={this.updateProgressBar}
-            cancelIf={fileIsIncorrectFiletype}
-            onCancel={this.showInvalidFileTypeMessage}
-            abortIf={this.cancelButtonClicked}
-            onAbort={this.resetCancelButtonClicked}
-            >
-            Click Here       
-         </FileInput>
+         <label >
+            <FileInput 
+              readAs='binary'
+              style={ { display: 'none' } }
+              
+              onLoadStart={this.showProgressBar}
+              onLoad={this.handleFileSelected}
+              onProgress={this.updateProgressBar}
+                            
+              cancelIf={fileIsIncorrectFiletype}
+              abortIf={this.cancelButtonClicked}
+              
+              onCancel={this.showInvalidFileTypeMessage}
+              onAbort={this.resetCancelButtonClicked}
+             />
+
+           <span >
+            Click Here  
+           </span>
+           
+         </label>
       </div>
     );
-  },
+  }
   
-  cancelButtonClicked: function(){
+  cancelButtonClicked(){
     return this.state.cancelButtonClicked;  
-  },
+  }
   
-  resetCancelButtonClicked: function(){
+  resetCancelButtonClicked(){                                                                 
     this.setState({ cancelButtonClicked: false });
-  },
+  }
   
-  showInvalidFileTypeMessage: function(file){
+  showInvalidFileTypeMessage(file){
     window.alert("Tried to upload invalid filetype " + file.type);
-  },
+  }
   
-  showProgressBar: function(){
+  showProgressBar(){
     this.setState({ progressBarVisible: true});
-  },
+  }
 
-  updateProgressBar: function(event){
+  updateProgressBar(event){
     this.setState({
       progressPercent: (event.loaded / event.total) * 100
     });
-  },
+  }
 
-  handleFileSelected: function(event, file){
+  handleFileSelected(event, file){
     this.setState({file: file, fileContents: event.target.result});
   }
-});
-
+}
 ```
+
+## Upgrading from 0.x.x
+
+To upgrade from 0.x.x to 1.0.0, you simply need to move any children of `FileInput` into an enclosing `label` tag, as shown in the example above and pass some styling using the `style` or `className` props to hide the default input field.
+
+## Contributors
+
+Thank you to github users selbekk and Zhouzi for your valued contributions via pull requests. They ended up informing most of the improvements in version 1.0.0. 
