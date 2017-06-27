@@ -21,6 +21,7 @@ const SUPPORTED_EVENTS = [
 
 const UNSUPPORTED_BY_INPUT = {
   readAs: true,
+  abortIf: true,
   cancelIf: true,
   onCancel: true
 };
