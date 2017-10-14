@@ -5,6 +5,8 @@ Simple wrapper for the HTML input tag and HTML5 FileReader API that supports mul
 ## Usage
 
 ```javascript
+var FileInput = require('react-simple-file-input');
+
 <FileInput
   readAs='binary'
   multiple
