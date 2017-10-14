@@ -21,13 +21,16 @@
     "package.json",
     "README.md"
   ],
+  "dependencies": {
+    "prop-types": "^15.5.7"
+  },
   "devDependencies": {
     "babel-cli": "^6.0.0",
     "babel-preset-react": "^6.16.0",
     "babel-preset-es2015": "^6.18.0"
   },
   "peerDependencies": {
-    "react": ">= 0.13.0"
+    "react": ">= 0.14.9"
   },
   "author": "Aleck Greenham",
   "license": "MIT",
