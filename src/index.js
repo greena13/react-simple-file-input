@@ -129,19 +129,19 @@ FileInput.propTypes = {
 
   multiple: PropTypes.bool,
 
-  readAs: React.PropTypes.oneOf( Object.keys(READ_METHOD_ALIASES) ),
+  readAs: PropTypes.oneOf( Object.keys(READ_METHOD_ALIASES) ),
 
-  onLoadStart: React.PropTypes.func,
-  onLoadEnd: React.PropTypes.func,
-  onLoad: React.PropTypes.func,
-  onAbort: React.PropTypes.func,
-  onCancel: React.PropTypes.func,
-  onChange: React.PropTypes.func,
-  onError: React.PropTypes.func,
-  onProgress: React.PropTypes.func,
+  onLoadStart: PropTypes.func,
+  onLoadEnd: PropTypes.func,
+  onLoad: PropTypes.func,
+  onAbort: PropTypes.func,
+  onCancel: PropTypes.func,
+  onChange: PropTypes.func,
+  onError: PropTypes.func,
+  onProgress: PropTypes.func,
 
-  cancelIf: React.PropTypes.func,
-  abortIf: React.PropTypes.func
+  cancelIf: PropTypes.func,
+  abortIf: PropTypes.func
 };
 
 export default FileInput;
