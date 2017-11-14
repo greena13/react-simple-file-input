@@ -1,6 +1,6 @@
 {
   "name": "react-simple-file-input",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Simple wrapper for the HTML input tag and HTML5 FileReader API",
   "main": "lib/index.js",
   "scripts": {
@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "babel-cli": "^6.0.0",
-    "babel-preset-react": "^6.16.0",
-    "babel-preset-es2015": "^6.18.0"
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0"
   },
   "peerDependencies": {
     "react": ">= 0.14.9"
