@@ -1,5 +1,8 @@
 # react-simple-file-input
 
+[![npm](https://img.shields.io/npm/dm/react-simple-file-input.svg)]()
+[![GitHub license](https://img.shields.io/github/license/greena13/react-simple-file-input.svg)](https://github.com/greena13/react-simple-file-input/blob/master/LICENSE)
+
 Simple wrapper for the HTML input tag and HTML5 FileReader API that supports multiple files
 
 ## Usage
