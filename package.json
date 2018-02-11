@@ -16,10 +16,12 @@
     "FileReader",
     "react"
   ],
+  "typings": "./index.d.ts",
   "files": [
     "lib",
     "package.json",
-    "README.md"
+    "README.md",
+    "index.d.ts"
   ],
   "dependencies": {
     "prop-types": "^15.5.7"
