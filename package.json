@@ -1,6 +1,6 @@
 {
   "name": "react-simple-file-input",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Simple wrapper for the HTML input tag and HTML5 FileReader API",
   "main": "index.js",
   "scripts": {
