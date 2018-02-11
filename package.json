@@ -22,6 +22,7 @@
     "cjs",
     "package.json",
     "README.md",
+    "LICENSE",
     "index.d.ts",
     "index.js"
   ],
@@ -37,6 +38,7 @@
     "babel-preset-react": "^6.16.0",
     "rollup": "^0.55.5",
     "rollup-plugin-babel": "^3.0.3",
+    "rollup-plugin-license": "^0.5.0",
     "rollup-plugin-replace": "^2.0.0",
     "rollup-plugin-uglify": "^3.0.0"
   },
@@ -44,7 +46,7 @@
     "react": ">= 0.14.9"
   },
   "author": "Aleck Greenham",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/greena13/react-simple-file-input/issues"
   },
