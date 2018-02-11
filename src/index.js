@@ -1,9 +1,5 @@
-'use strict';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-const INPUT_FIELD_REF = 'inputField';
 
 const READ_METHOD_ALIASES = {
   buffer: 'readAsArrayBuffer',
@@ -116,7 +112,7 @@ class FileInput extends Component {
     return(
       <input {...inputProps}
          type='file'
-         ref={ INPUT_FIELD_REF }
+         ref={ (c) => this.inputField = c }
          onChange={ this.handleChange }
       />
     );
