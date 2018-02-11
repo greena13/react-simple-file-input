@@ -154,7 +154,6 @@ class FileInput extends Component {
     return(
       <input {...inputProps}
          type='file'
-         ref={ (c) => this.inputField = c }
          onChange={ this.handleChange }
       />
     );
