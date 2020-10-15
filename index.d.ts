@@ -1,6 +1,8 @@
 // Type definitions for React Simple File Input
 // Project: react-simple-file-input
 
+import React from "react";
+
 /**
  * Called after the user has finished selecting file(s) using the browser dialog.
  */
@@ -147,7 +149,7 @@ interface ComponentProps {
  * It supports all of the properties available to a file input field, and all of the
  * events supplied by a FileReader with a few additional ones as well.
  */
-export default class FileInput {
+export default class FileInput extends React.Component<ComponentProps> {
     /**
      * Creates a new instance of FileInput React component
      */
